@@ -1,0 +1,35 @@
+# Backend
+backend/target/
+backend/.mvn/
+*.class
+target/
+
+# Flutter / Dart
+mobile/.dart_tool/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/build/
+mobile/.packages
+mobile/pubspec.lock
+**/*.g.dart
+**/*.freezed.dart
+
+# Ops web
+ops-web/node_modules/
+ops-web/dist/
+
+# Environment files - never commit real secrets
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Allow example env files
+!.env.example
+!**/.env.example
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.iml

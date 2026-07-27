@@ -1,0 +1,86 @@
+spring:
+  application:
+    name: nowaito-backend
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  jackson:
+    default-property-inclusion: non_null
+
+server:
+  port: 8080
+
+nowaito:
+  jwt:
+    secret: ${JWT_SECRET:nowaito-dev-secret-change-this-in-production-please-0001}
+    expiry-minutes: 1440
+  zone:
+    min-drivers-to-launch: 20
+    health-floor: 10
+  cancellation:
+    free-window-minutes: 3
+    fee-rupees: 40
+    driver-share-rupees: 25
+  pricing:
+    guarantee-fee:
+      BIKE: 5
+      AUTO: 7
+      CAR: 9
+  razorpay:
+    key-id: ${RAZORPAY_KEY_ID:rzp_test_placeholder}
+    key-secret: ${RAZORPAY_KEY_SECRET:placeholder_secret}
+
+springdoc:
+  swagger-ui:
+    path: /docs
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:postgresql://db.ovlfcstefbxwkcvvafkg.supabase.co:5432/postgres
+    username: postgres
+    password: NoWaito@9025
+  data:
+    redis:
+      host: liberal-bullfrog-181974.upstash.io
+      port: 6379
+
+---
+# Free-tier cloud profile: point these at your own Supabase (Postgres) +
+# Upstash (Redis) projects once created. See README "Free-tier setup".
+spring:
+  config:
+    activate:
+      on-profile: free-cloud
+  datasource:
+#    url: ${SUPABASE_DB_URL:jdbc:postgresql://CHANGE-ME.supabase.co:5432/postgres}
+#    username: ${SUPABASE_DB_USER:postgres}
+#    password: ${SUPABASE_DB_PASSWORD:CHANGE-ME}
+  url: jdbc:postgresql://db.ovlfcstefbxwkcvvafkg.supabase.co:5432/postgres
+  username: postgres
+  password: NoWaito@9025
+  data:
+    redis:
+#      host: ${UPSTASH_REDIS_HOST:CHANGE-ME.upstash.io}
+#      port: ${UPSTASH_REDIS_PORT:6379}
+#      password: ${UPSTASH_REDIS_PASSWORD:CHANGE-ME}
+      host: liberal-bullfrog-181974.upstash.io
+      port: 6379
+      password: gQAAAAAAAsbWAAIgcDI2NzJjMzQ4MWMzZDI0NWQ3YWEwMzQxMGExNmExZGFhOA
+      ssl:
+        enabled: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:nowaito;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
