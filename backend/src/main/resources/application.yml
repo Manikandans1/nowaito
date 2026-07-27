@@ -36,18 +36,36 @@ springdoc:
     path: /docs
 
 ---
+#spring:
+#  config:
+#    activate:
+#      on-profile: local
+#  datasource:
+#    url: jdbc:postgresql://db.ovlfcstefbxwkcvvafkg.supabase.co:5432/postgres
+#    username: postgres
+#    password: NoWaito@9025
+#  data:
+#    redis:
+#      host: liberal-bullfrog-181974.upstash.io
+#      port: 6379
+
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile: free-cloud
+
   datasource:
-    url: jdbc:postgresql://db.ovlfcstefbxwkcvvafkg.supabase.co:5432/postgres
-    username: postgres
-    password: NoWaito@9025
+    url: ${SUPABASE_DB_URL}
+    username: ${SUPABASE_DB_USER}
+    password: ${SUPABASE_DB_PASSWORD}
+
   data:
     redis:
-      host: liberal-bullfrog-181974.upstash.io
-      port: 6379
+      host: ${UPSTASH_REDIS_HOST}
+      port: ${UPSTASH_REDIS_PORT:6379}
+      password: ${UPSTASH_REDIS_PASSWORD}
+      ssl:
+        enabled: true
 
 ---
 # Free-tier cloud profile: point these at your own Supabase (Postgres) +
